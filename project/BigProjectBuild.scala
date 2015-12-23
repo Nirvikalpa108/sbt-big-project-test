@@ -29,7 +29,10 @@ object BigProjectBuild extends Build {
     settings(
       name := "sbt-big-project",
       ScalariformKeys.preferences := FormattingPreferences().setPreference(AlignSingleLineCaseStatements, true),
-      scriptedLaunchOpts := Seq("-Dplugin.version=" + version.value),
+      scriptedLaunchOpts := Seq(
+        "-Dplugin.version=" + version.value,
+        "-Dsbt.task.timings=true"
+      ),
       scriptedBufferLog := false
     )
 

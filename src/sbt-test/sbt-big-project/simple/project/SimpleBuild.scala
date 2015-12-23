@@ -28,8 +28,9 @@ object SimpleBuild extends Build {
     val proj = Project(name, file(name)).enablePlugins(BigProjectPlugin).settings(
       BigProjectPlugin.overrideProjectSettings(Compile),
       BigProjectPlugin.overrideProjectSettings(Test),
-      inConfig(Compile)(testInstrumentation),
-      inConfig(Test)(testInstrumentation),
+      inConfig(Compile)(testConfigInstrumentation),
+      inConfig(Test)(testConfigInstrumentation),
+      testInstrumentation,
       scriptedTasks
     )
     createSources(proj.id)

@@ -71,76 +71,28 @@ object BigProjectPlugin extends AutoPlugin {
     }
   }
 
-  // FIXME: invalidate this cache with source file watchers or if user requests directly
-  // FIXME: compile is not stopping at the packageBin above, stunt further...
-  /*
-   It's definitely one of these that's the entrance point to the subproject...
+  // FIXME: strategies to invalidate these caches
 
-  c//:update: 15.225537 ms
-  c//:projectDescriptors: 3.7556369999999997 ms
-  c/compile:compile: 0.6808299999999999 ms
-  c/compile:unmanagedJars: 0.5502589999999999 ms
-  c//:dependencyPositions: 0.37309 ms
-  c//:ivyConfiguration: 0.346205 ms
-  c//:ivySbt: 0.345838 ms
-  c/compile:exportedProducts: 0.212473 ms
-  c/compile:discoveredMainClasses: 0.20038799999999998 ms
-  c//:bootResolvers: 0.09755499999999999 ms
-  c/compile:packageBin: 0.088985 ms
-  c//:dependencyCacheDirectory: 0.082843 ms
-  c//:ivyModule: 0.069594 ms
-  c//:fullResolvers: 0.054268 ms
-  c//:transitiveUpdate: 0.033884 ms
-  c//:projectDependencies: 0.029869 ms
-  c//:allDependencies: 0.024919999999999998 ms
-  c//:credentials: 0.014404 ms
-  c/compile:packageBinFile: 0.014378 ms
-  c//:updateCacheName: 0.010686 ms
-  c//:externalResolvers: 0.007783999999999999 ms
-  c//:projectResolver: 0.007357 ms
-  c//:moduleSettings: 0.006816999999999999 ms
-  c//:update::unresolvedWarningConfiguration: 0.002446 ms
+  /*
+   It's definitely one of these that's the entrance point to the subproject, and
+   causing transitive task creation joy.
+
+     *:projectDescriptors: 2.856385 ms      // TASK
+     compile:exportedProducts: 0.907261 ms  // TASK (not critical path)
+     *:ivyConfiguration: 0.353889 ms        // TASK
+     compile:unmanagedJars: 0.323248 ms     // TASK (probably not critical path)
+     *:ivySbt: 0.159503 ms                  // TASK (probably not critical path)
+     *:bootResolvers: 0.065265 ms           // TASK (probably not critical path)
+     *:ivyModule: 0.048709999999999996 ms   // TASK (probably not critical path)
+     *:projectDependencies: 0.039265 ms     // TASK (weird, breadcrumb doesn't work)
+     *:fullResolvers: 0.02361 ms            // TASK (probably not critical path)
+     *:allDependencies: 0.019998 ms         // TASK
+     compile:packageBinFile: 0.016877 ms    // SETTING
+     *:externalResolvers: 0.008927 ms       // TASK (probably not critical path)
+     *:projectResolver: 0.008799 ms         // TASK (probably not critical path)
+     *:moduleSettings: 0.0085 ms            // TASK (probably not critical path)
 
    */
-
-  // not a critical node
-  val compileCache = new java.util.concurrent.ConcurrentHashMap[String, inc.Analysis]()
-  def dynamicCompileTask: Def.Initialize[Task[inc.Analysis]] = Def.taskDyn {
-    val key = s"${thisProject.value.id}/${configuration.value}"
-    val jar = packageBinFile.value
-    val cached = compileCache.get(key)
-
-    if (jar.exists() && cached != null) Def.task {
-      streams.value.log.info(s"COMPILE CACHE HIT $key")
-      cached
-    }
-    else Def.task {
-      streams.value.log.info(s"COMPILE CALCULATING $key")
-      val calculated = Defaults.compileTask.value
-      compileCache.put(key, calculated)
-      calculated
-    }
-  }
-
-  // not a critical node
-  val updateCache = new java.util.concurrent.ConcurrentHashMap[String, UpdateReport]()
-  def dynamicUpdateTask(config: Option[Configuration]): Def.Initialize[Task[UpdateReport]] = Def.taskDyn {
-    val key = s"${thisProject.value.id}/${config}" // HACK to support no-config
-    val jar = (packageBinFile in Compile).value // HACK or should be defined without Compile
-    val cached = updateCache.get(key)
-
-    if (jar.exists() && cached != null) Def.task {
-      streams.value.log.info(s"UPDATE CACHE HIT $key")
-      cached
-    }
-    else Def.task {
-      streams.value.log.info(s"UPDATE CALCULATING $key")
-      val calculated = (Classpaths.updateTask tag (Tags.Update, Tags.Network)).value
-      ConflictWarning(conflictWarning.value, calculated, streams.value.log)
-      updateCache.put(key, calculated)
-      calculated
-    }
-  }
 
   // not a critical node, but close!
   val exportedProductsCache = new java.util.concurrent.ConcurrentHashMap[String, Classpath]()
@@ -251,14 +203,11 @@ object BigProjectPlugin extends AutoPlugin {
   ) ++ inConfig(phase)(
       Seq(
         // FIXME: move everything to be inConfig defined from the outside
-        compile := dynamicCompileTask.value,
-        update := dynamicUpdateTask(Some(phase)).value,
         transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
         exportedProducts := dynamicExportedProductsTask.value
       )
     ) ++ Seq(
         // intentionally not in a configuration
-        update := dynamicUpdateTask(None).value,
         transitiveUpdate := dynamicTransitiveUpdateTask(None).value
       )
 
