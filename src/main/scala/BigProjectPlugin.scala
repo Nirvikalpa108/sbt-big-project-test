@@ -199,12 +199,12 @@ object BigProjectPlugin extends AutoPlugin {
       Seq(
         // FIXME: move everything to be inConfig defined from the outside
         transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
-        allDependencies := dynamicProjectDependenciesTask(Some(phase)).value
+        projectDependencies := dynamicProjectDependenciesTask(Some(phase)).value
       )
     ) ++ Seq(
         // intentionally not in a configuration
         transitiveUpdate := dynamicTransitiveUpdateTask(None).value,
-        allDependencies := dynamicProjectDependenciesTask(None).value
+        projectDependencies := dynamicProjectDependenciesTask(None).value
       )
 
   override val projectSettings: Seq[Setting[_]] = Seq(
