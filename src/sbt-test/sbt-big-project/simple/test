@@ -1,0 +1,18 @@
+# check the compile
+> d/compile
+> a/breadcrumbsExpect update compile packageBin
+> b/breadcrumbsExpect update compile packageBin
+> c/breadcrumbsExpect update compile packageBin
+> d/breadcrumbsExpect update compile
+> breadcrumbsClear
+# check that subsequent invocations don't do anything
+> d/compile
+> a/breadcrumbsExpect
+> b/breadcrumbsExpect
+> c/breadcrumbsExpect
+> d/breadcrumbsExpect update compile
+> d/compile
+> a/breadcrumbsExpect
+> b/breadcrumbsExpect
+> c/breadcrumbsExpect
+> d/breadcrumbsExpect update compile
