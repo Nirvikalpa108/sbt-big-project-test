@@ -13,10 +13,11 @@ import Keys._
 object BigProjectTestSupport {
   ///////////////////////////////////////////////////////////////////////////
   // Test instrumentation to detect invocations of expensive Tasks
+  // WORKAROUND https://github.com/sbt/sbt/issues/1209
   val testInstrumentation = Seq(
-    update <<= update dependsOn breadcrumb("update"),
-    compile <<= compile dependsOn breadcrumb("compile"),
-    packageBin <<= packageBin dependsOn breadcrumb("packageBin")
+    update in Compile <<= (update in Compile) dependsOn breadcrumb("update"),
+    compile in Compile <<= (compile in Compile) dependsOn breadcrumb("compile"),
+    packageBin in Compile <<= (packageBin in Compile) dependsOn breadcrumb("packageBin")
   )
   def breadcrumb(name: String) = baseDirectory.map { dir => IO.touch(dir / (name + ".breadcrumb")) }
 

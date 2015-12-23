@@ -71,6 +71,24 @@ object BigProjectPlugin extends AutoPlugin {
     }
   }
 
+  // FIXME: compile is not stopping at the packageBin above, stunt further...
+  val compileCache = new java.util.concurrent.ConcurrentHashMap[String, inc.Analysis]()
+  def dynamicCompileTask: Def.Initialize[Task[inc.Analysis]] = Def.taskDyn {
+    val key = s"${thisProject.value.id}/${configuration.value}"
+    val cached = compileCache.get(key)
+
+    if (cached == null) Def.task {
+      streams.value.log.info(s"CALCULATING $key")
+      val calculated = Defaults.compileTask.value
+      compileCache.put(key, calculated)
+      calculated
+    }
+    else Def.task {
+      streams.value.log.info(s"CACHE HIT $key")
+      cached
+    }
+  }
+
   /**
    * The default behaviour of `compile` leaves the `packageBin`
    * untouched, but we'd like to delete the `packageBin` on all
@@ -130,7 +148,10 @@ object BigProjectPlugin extends AutoPlugin {
     //update in phase := eclipseTestVisibilityTask(phase).value,
     //compile in phase := deleteBinOnCompileTask(phase).value,
     packageBinFile in phase := packageBinFileTask(phase).value
-  )
+  ) ++ inConfig(phase)(
+      // FIXME: move everything to be inConfig defined from the outside
+      compile := dynamicCompileTask.value
+    )
 
   override val projectSettings: Seq[Setting[_]] = Seq(
     exportJars := true,
