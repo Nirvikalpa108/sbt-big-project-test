@@ -94,21 +94,19 @@ object BigProjectPlugin extends AutoPlugin {
 
    */
 
-  // not a critical node, but close!
-  val exportedProductsCache = new java.util.concurrent.ConcurrentHashMap[String, Classpath]()
-  def dynamicExportedProductsTask: Def.Initialize[Task[Classpath]] = Def.taskDyn {
-    val key = s"${thisProject.value.id}/${configuration.value}"
-    val jar = packageBinFile.value
-    val cached = exportedProductsCache.get(key)
+  val allDependenciesCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[ModuleID]]()
+  def dynamicAllDependenciesTask(config: Option[Configuration]): Def.Initialize[Task[Seq[ModuleID]]] = Def.taskDyn {
+    val key = s"${thisProject.value.id}/${config}" // HACK
+    val cached = allDependenciesCache.get(key)
 
-    if (jar.exists() && cached != null) Def.task {
-      streams.value.log.info(s"EXPORTEDPRODUCTS CACHE HIT $key")
+    if (cached != null) Def.task {
+      streams.value.log.info(s"ALLDEPENDENCIES CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"EXPORTEDPRODUCTS CALCULATING $key")
-      val calculated = (Classpaths.exportProductsTask).value
-      exportedProductsCache.put(key, calculated)
+      streams.value.log.info(s"ALLDEPENDENCIES CALCULATING $key")
+      val calculated = projectDependencies.value ++ libraryDependencies.value
+      allDependenciesCache.put(key, calculated)
       calculated
     }
   }
@@ -117,16 +115,13 @@ object BigProjectPlugin extends AutoPlugin {
   val transitiveUpdateCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[UpdateReport]]()
   def dynamicTransitiveUpdateTask(config: Option[Configuration]): Def.Initialize[Task[Seq[UpdateReport]]] = Def.taskDyn {
     val key = s"${thisProject.value.id}/${config}" // HACK to support no-config
-    val jar = (packageBinFile in Compile).value // HACK or should be defined without Compile
     val cached = transitiveUpdateCache.get(key)
 
-    // why is the instance private?
-    // note, must be in the dynamic task
+    // this must be in the dynamic task, not the subsequent task,
+    // so we can't use Defaults.transitiveUpdateTask
     val make = new ScopeFilter.Make {}
-    // FIXME: change this to only return the first layer, not the whole list
     val selectDeps = ScopeFilter(make.inDependencies(ThisProject, includeRoot = false))
 
-    //if (jar.exists() && cached != null) Def.task {
     if (cached != null) Def.task {
       streams.value.log.info(s"TRANSITIVEUPDATE CACHE HIT $key")
       cached
@@ -204,11 +199,12 @@ object BigProjectPlugin extends AutoPlugin {
       Seq(
         // FIXME: move everything to be inConfig defined from the outside
         transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
-        exportedProducts := dynamicExportedProductsTask.value
+        allDependencies := dynamicAllDependenciesTask(Some(phase)).value
       )
     ) ++ Seq(
         // intentionally not in a configuration
-        transitiveUpdate := dynamicTransitiveUpdateTask(None).value
+        transitiveUpdate := dynamicTransitiveUpdateTask(None).value,
+        allDependencies := dynamicAllDependenciesTask(None).value
       )
 
   override val projectSettings: Seq[Setting[_]] = Seq(
