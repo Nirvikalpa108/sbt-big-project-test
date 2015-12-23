@@ -2,6 +2,8 @@
 // License: Apache-2.0
 package fommil
 
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor
+import org.apache.ivy.core.module.id.ModuleRevisionId
 import sbt._
 import Keys._
 
@@ -94,19 +96,19 @@ object BigProjectPlugin extends AutoPlugin {
 
    */
 
-  val projectDependenciesCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[ModuleID]]()
-  def dynamicProjectDependenciesTask(config: Option[Configuration]): Def.Initialize[Task[Seq[ModuleID]]] = Def.taskDyn {
+  val projectDescriptorsCache = new java.util.concurrent.ConcurrentHashMap[String, Map[ModuleRevisionId, ModuleDescriptor]]()
+  def dynamicProjectDescriptorsTask(config: Option[Configuration]): Def.Initialize[Task[Map[ModuleRevisionId, ModuleDescriptor]]] = Def.taskDyn {
     val key = s"${thisProject.value.id}/${config}" // HACK
-    val cached = projectDependenciesCache.get(key)
+    val cached = projectDescriptorsCache.get(key)
 
     if (cached != null) Def.task {
-      streams.value.log.info(s"PROJECTDEPENDENCIES CACHE HIT $key")
+      streams.value.log.info(s"PROJECTDESCRIPTORS CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"PROJECTDEPENDENCIES CALCULATING $key")
-      val calculated = Classpaths.projectDependenciesTask.value
-      projectDependenciesCache.put(key, calculated)
+      streams.value.log.info(s"PROJECTDESCRIPTORS CALCULATING $key")
+      val calculated = Classpaths.depMap.value
+      projectDescriptorsCache.put(key, calculated)
       calculated
     }
   }
@@ -199,12 +201,12 @@ object BigProjectPlugin extends AutoPlugin {
       Seq(
         // FIXME: move everything to be inConfig defined from the outside
         transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
-        allDependencies := dynamicProjectDependenciesTask(Some(phase)).value
+        projectDescriptors := dynamicProjectDescriptorsTask(Some(phase)).value
       )
     ) ++ Seq(
         // intentionally not in a configuration
         transitiveUpdate := dynamicTransitiveUpdateTask(None).value,
-        allDependencies := dynamicProjectDependenciesTask(None).value
+        projectDescriptors := dynamicProjectDescriptorsTask(None).value
       )
 
   override val projectSettings: Seq[Setting[_]] = Seq(
