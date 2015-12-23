@@ -84,9 +84,9 @@ object BigProjectPlugin extends AutoPlugin {
      *:ivySbt: 0.159503 ms                  // TASK (probably not critical path)
      *:bootResolvers: 0.065265 ms           // TASK (probably not critical path)
      *:ivyModule: 0.048709999999999996 ms   // TASK (probably not critical path)
-     *:projectDependencies: 0.039265 ms     // TASK (weird, breadcrumb doesn't work)
+     *:projectDependencies: 0.039265 ms     // TASK (probably critical, but blows up when cached)
      *:fullResolvers: 0.02361 ms            // TASK (probably not critical path)
-     *:allDependencies: 0.019998 ms         // TASK
+     *:allDependencies: 0.019998 ms         // TASK (probably critical, but blows up when cached)
      compile:packageBinFile: 0.016877 ms    // SETTING
      *:externalResolvers: 0.008927 ms       // TASK (probably not critical path)
      *:projectResolver: 0.008799 ms         // TASK (probably not critical path)
@@ -94,19 +94,19 @@ object BigProjectPlugin extends AutoPlugin {
 
    */
 
-  val allDependenciesCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[ModuleID]]()
-  def dynamicAllDependenciesTask(config: Option[Configuration]): Def.Initialize[Task[Seq[ModuleID]]] = Def.taskDyn {
+  val projectDependenciesCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[ModuleID]]()
+  def dynamicProjectDependenciesTask(config: Option[Configuration]): Def.Initialize[Task[Seq[ModuleID]]] = Def.taskDyn {
     val key = s"${thisProject.value.id}/${config}" // HACK
-    val cached = allDependenciesCache.get(key)
+    val cached = projectDependenciesCache.get(key)
 
     if (cached != null) Def.task {
-      streams.value.log.info(s"ALLDEPENDENCIES CACHE HIT $key")
+      streams.value.log.info(s"PROJECTDEPENDENCIES CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"ALLDEPENDENCIES CALCULATING $key")
-      val calculated = projectDependencies.value ++ libraryDependencies.value
-      allDependenciesCache.put(key, calculated)
+      streams.value.log.info(s"PROJECTDEPENDENCIES CALCULATING $key")
+      val calculated = Classpaths.projectDependenciesTask.value
+      projectDependenciesCache.put(key, calculated)
       calculated
     }
   }
@@ -199,12 +199,12 @@ object BigProjectPlugin extends AutoPlugin {
       Seq(
         // FIXME: move everything to be inConfig defined from the outside
         transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
-        allDependencies := dynamicAllDependenciesTask(Some(phase)).value
+        allDependencies := dynamicProjectDependenciesTask(Some(phase)).value
       )
     ) ++ Seq(
         // intentionally not in a configuration
         transitiveUpdate := dynamicTransitiveUpdateTask(None).value,
-        allDependencies := dynamicAllDependenciesTask(None).value
+        allDependencies := dynamicProjectDependenciesTask(None).value
       )
 
   override val projectSettings: Seq[Setting[_]] = Seq(
