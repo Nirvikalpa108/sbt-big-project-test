@@ -29,10 +29,11 @@ object SimpleBuild extends Build {
 
   def simpleProject(name: String): Project = {
     val proj = Project(name, file(name)).enablePlugins(BigProjectPlugin).settings(
-      BigProjectPlugin.overrideProjectSettings(Compile, Test),
+      BigProjectPlugin.overrideProjectSettings(Compile, Test)
+    ).settings (
       BigProjectTestSupport.testInstrumentation(Compile, Test)
     )
-    createSources(proj.id)
+    BigProjectTestSupport.createSources(proj.id)
     proj
   }
 

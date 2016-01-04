@@ -40,8 +40,8 @@ object BigProjectPlugin extends AutoPlugin {
     (projectID, crossTarget, scalaBinaryVersion).map { (module, dir, scala) =>
       val append = config match {
         case Compile => ""
-        case Test => "-tests"
-        case _ => "-" + config.name
+        case Test    => "-tests"
+        case _       => "-" + config.name
       }
       dir / s"${module.name}_${scala}-${module.revision}$append.jar"
     }

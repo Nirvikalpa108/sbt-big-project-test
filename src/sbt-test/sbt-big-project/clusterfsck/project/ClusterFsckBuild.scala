@@ -63,14 +63,15 @@ object ClusterFsckBuild extends Build {
         case (p, d) => p.dependsOn(LocalProject(d))
       }.enablePlugins(BigProjectPlugin).settings(
         // install BigProjectPlugin
-        BigProjectPlugin.overrideProjectSettings(Compile, Test),
+        BigProjectPlugin.overrideProjectSettings(Compile, Test)
+      ).settings(
         BigProjectTestSupport.testInstrumentation(Compile, Test)
       ).settings(
         updateOptions := updateOptions.value.withCachedResolution(true)
       )
   }.map { proj =>
     // generate the project
-    createSources(proj.id)
+    BigProjectTestSupport.createSources(proj.id)
     // customise individual Projects
     proj.id match {
       case "obf--1788614413" => proj.settings(
