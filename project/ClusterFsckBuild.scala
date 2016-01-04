@@ -5,10 +5,10 @@ import sbt._
 import Keys._
 import Def.Initialize
 
-import fommil.BigProjectPlugin
-import fommil.BigProjectKeys
+// import fommil.BigProjectPlugin
+// import fommil.BigProjectKeys
 
-import fommil.BigProjectTestSupport
+// import fommil.BigProjectTestSupport
 
 /**
  * Example large project structure. Specific challenges:
@@ -61,27 +61,29 @@ object ClusterFsckBuild extends Build {
       // sidenote, it'd be nice if dependsOn could take a Seq
       depNames.foldLeft(Project(name, file(name))) {
         case (p, d) => p.dependsOn(LocalProject(d))
-      }.enablePlugins(BigProjectPlugin).settings(
+      } /*.enablePlugins(BigProjectPlugin).settings(
         // install BigProjectPlugin
         BigProjectPlugin.overrideProjectSettings(Compile, Test)
       ).settings(
         BigProjectTestSupport.testInstrumentation(Compile, Test)
-      ).settings(
+      ) */
+      .settings(
         updateOptions := updateOptions.value.withCachedResolution(true)
       )
   }.map { proj =>
     // generate the project
-    BigProjectTestSupport.createSources(proj.id)
+    createSources(proj.id)
     // customise individual Projects
-    proj.id match {
-      case "obf--1788614413" => proj.settings(
-        BigProjectKeys.eclipseTestsFor := Some(LocalProject("obf-518286142"))
-      )
-      case "obf--694432521" => proj.settings(
-        BigProjectKeys.eclipseTestsFor := Some(LocalProject("obf-1770460346"))
-      )
-      case _ => proj
-    }
+    // proj.id match {
+    //   case "obf--1788614413" => proj.settings(
+    //     BigProjectKeys.eclipseTestsFor := Some(LocalProject("obf-518286142"))
+    //   )
+    //   case "obf--694432521" => proj.settings(
+    //     BigProjectKeys.eclipseTestsFor := Some(LocalProject("obf-1770460346"))
+    //   )
+    //   case _ => proj
+    // }
+    proj
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -272,4 +274,28 @@ object ClusterFsckBuild extends Build {
     "obf--197784185" -> List("obf-1557503190", "obf--646304850", "obf-106934911", "obf-1557503190", "obf--929116432"),
     "obf-270719206" -> List("obf--646304850")
   )
+
+  ///////////////////////////////////////////////////////////////////////////
+  // creates some sources for the named Project
+  def createSources(name: String): Unit = {
+    val sanitised = name.replace("-", "")
+
+    val dir = file(name) / "src/main/scala/"
+    dir.mkdirs()
+    val foo = dir / sanitised / "Foo.scala"
+    val bar = dir / sanitised / "Bar.scala"
+
+    // having two main classes is a good way to eyeball when expensive
+    // classpath scanning is taking place because it'll always
+    // complain about multiple mains.
+    IO.write(foo, s"package $sanitised\nobject Foo extends App")
+    IO.write(bar, s"package $sanitised\nobject Bar extends App")
+
+    val testdir = file(name) / "src/test/scala/"
+    testdir.mkdirs()
+    val testfoo = testdir / sanitised / "FooTest.scala"
+
+    // introducing ScalaTest would just slow things further...
+    IO.write(testfoo, s"package $sanitised\nclass FooTest")
+  }
 }
