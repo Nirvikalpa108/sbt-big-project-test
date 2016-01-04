@@ -36,12 +36,12 @@ object BigProjectPlugin extends AutoPlugin {
 
   import autoImports._
 
-  def packageBinFileTask(phase: Configuration) =
+  private def packageBinFileTask(config: Configuration) =
     (projectID, crossTarget, scalaBinaryVersion).map { (module, dir, scala) =>
-      val append = phase match {
+      val append = config match {
         case Compile => ""
-        case Test    => "-tests"
-        case _       => "-" + phase.name
+        case Test => "-tests"
+        case _ => "-" + config.name
       }
       dir / s"${module.name}_${scala}-${module.revision}$append.jar"
     }
@@ -56,27 +56,28 @@ object BigProjectPlugin extends AutoPlugin {
    * This reimplements packageTask to only run Package if the jar
    * doesn't exist, which limits the scope of sbt's classpath scans.
    */
-  def dynamicPackageBinTask(phase: Configuration): Def.Initialize[Task[File]] = Def.taskDyn {
+  private def dynamicPackageBinTask(config: Configuration): Def.Initialize[Task[File]] = Def.taskDyn {
     // all references to `.value` in a Task mean that the task is
     // aggressively invoked as a dependency to this task. However, it
     // is possible to lazily call dependent tasks from Dynamic Tasks.
     // http://www.scala-sbt.org/0.13/docs/Tasks.html#Dynamic+Computations+with
-    val jar = (packageBinFile in phase).value
+    val jar = (packageBinFile in config).value
     if (jar.exists()) Def.task {
       jar
     }
     else Def.task {
-      val s = (streams in packageBin in phase).value
-      val config = (packageConfiguration in packageBin in phase).value
-      Package(config, s.cacheDirectory, s.log)
+      val s = (streams in packageBin in config).value
+      val c = (packageConfiguration in packageBin in config).value
+      Package(c, s.cacheDirectory, s.log)
       jar
     }
   }
 
   // original causes traversals of dependency projects
-  val transitiveUpdateCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[UpdateReport]]()
-  def dynamicTransitiveUpdateTask(config: Option[Configuration]): Def.Initialize[Task[Seq[UpdateReport]]] = Def.taskDyn {
-    val key = s"${thisProject.value.id}/${config}" // HACK to support no-config
+  private val transitiveUpdateCache = new java.util.concurrent.ConcurrentHashMap[String, Seq[UpdateReport]]()
+  private def dynamicTransitiveUpdateTask: Def.Initialize[Task[Seq[UpdateReport]]] = Def.taskDyn {
+    // doesn't have a Configuration, always project-level
+    val key = s"${thisProject.value.id}"
     val cached = transitiveUpdateCache.get(key)
 
     // note, must be in the dynamic task
@@ -84,11 +85,11 @@ object BigProjectPlugin extends AutoPlugin {
     val selectDeps = ScopeFilter(make.inDependencies(ThisProject, includeRoot = false))
 
     if (cached != null) Def.task {
-      streams.value.log.info(s"TRANSITIVEUPDATE CACHE HIT $key")
+      streams.value.log.debug(s"TRANSITIVEUPDATE CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"TRANSITIVEUPDATE CALCULATING $key")
+      streams.value.log.debug(s"TRANSITIVEUPDATE CALCULATING $key")
       val allUpdates = update.?.all(selectDeps).value
       val calculated = allUpdates.flatten ++ globalPluginUpdate.?.value
       transitiveUpdateCache.put(key, calculated)
@@ -97,36 +98,35 @@ object BigProjectPlugin extends AutoPlugin {
   }
 
   // original causes traversals of dependency projects
-  val dependencyClasspathCache = new java.util.concurrent.ConcurrentHashMap[String, Classpath]()
-  def dynamicDependencyClasspathTask: Def.Initialize[Task[Classpath]] = Def.taskDyn {
+  private val dependencyClasspathCache = new java.util.concurrent.ConcurrentHashMap[String, Classpath]()
+  private def dynamicDependencyClasspathTask: Def.Initialize[Task[Classpath]] = Def.taskDyn {
     val key = s"${thisProject.value.id}/${configuration.value}"
     val cached = dependencyClasspathCache.get(key)
     if (cached != null) Def.task {
-      streams.value.log.info(s"DEPENDENCIESCLASSPATH CACHE HIT $key")
+      streams.value.log.debug(s"DEPENDENCIESCLASSPATH CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"DEPENDENCIESCLASSPATH CALCULATING $key")
+      streams.value.log.debug(s"DEPENDENCIESCLASSPATH CALCULATING $key")
       val calculated = internalDependencyClasspath.value ++ externalDependencyClasspath.value
       dependencyClasspathCache.put(key, calculated)
       calculated
     }
   }
 
-  ////
-  // causes traversals of subprojects, but cache not hitting
-  val projectDescriptorsCache = new java.util.concurrent.ConcurrentHashMap[String, Map[ModuleRevisionId, ModuleDescriptor]]()
-  def dynamicProjectdescriptorsTask: Def.Initialize[Task[Map[ModuleRevisionId, ModuleDescriptor]]] = Def.taskDyn {
-    val key = s"${thisProject.value.id}/${configuration.value}"
-    val jar = packageBinFile.value
+  // original causes traversals of dependency projects
+  private val projectDescriptorsCache = new java.util.concurrent.ConcurrentHashMap[String, Map[ModuleRevisionId, ModuleDescriptor]]()
+  private def dynamicProjectdescriptorsTask: Def.Initialize[Task[Map[ModuleRevisionId, ModuleDescriptor]]] = Def.taskDyn {
+    // doesn't have a Configuration, always project-level
+    val key = s"${thisProject.value.id}"
     val cached = projectDescriptorsCache.get(key)
 
-    if (jar.exists() && cached != null) Def.task {
-      streams.value.log.info(s"PROJECTDESCRIPTORS CACHE HIT $key")
+    if (cached != null) Def.task {
+      streams.value.log.debug(s"PROJECTDESCRIPTORS CACHE HIT $key")
       cached
     }
     else Def.task {
-      streams.value.log.info(s"PROJECTDESCRIPTORS CALCULATING $key")
+      streams.value.log.debug(s"PROJECTDESCRIPTORS CALCULATING $key")
       val calculated = Classpaths.depMap.value
       projectDescriptorsCache.put(key, calculated)
       calculated
@@ -138,10 +138,10 @@ object BigProjectPlugin extends AutoPlugin {
    * untouched, but we'd like to delete the `packageBin` on all
    * `compile`s to avoid staleness.
    */
-  def deleteBinOnCompileTask(phase: Configuration) =
-    (packageBinFile in phase, compile in phase, streams in phase) map { (bin, orig, s) =>
+  private def deleteBinOnCompileTask(config: Configuration) =
+    (packageBinFile in config, compile in config, streams in config) map { (bin, orig, s) =>
       if (bin.exists()) {
-        s.log.info(s"deleting prior to compile $bin")
+        s.log.debug(s"deleting prior to compile $bin")
         bin.delete()
       }
       orig
@@ -153,26 +153,26 @@ object BigProjectPlugin extends AutoPlugin {
    * on each test invocation but ensures the expected semantics are
    * observed.
    *
-   * This is attached as a post-update phase since its awkward to
+   * This is attached as a post-update config since its awkward to
    * attach a Task as a pre-step to compile.
    *
    * There is the potential to optimise this further by calling
    * `Package` instead of blindly deleting.
    */
-  def eclipseTestVisibilityTask(phase: Configuration) = Def.taskDyn {
+  private def eclipseTestVisibilityTask(config: Configuration) = Def.taskDyn {
     val dep = eclipseTestsFor.value
-    val orig = (update in phase).value
+    val orig = (update in config).value
     dep match {
-      case Some(ref) if phase.extendsConfigs.contains(Test) => Def.task {
+      case Some(ref) if config.extendsConfigs.contains(Test) => Def.task {
         // limitation: only deletes the current and referenced main jars
         // val main = (packageBinFile in Compile).value
         // if (main.exists()) main.delete()
         val s = (streams in Compile in ref).value
         val upstream = (packageBinFile in Compile in ref).value
-        s.log.info(s"checking prior to test $upstream")
+        s.log.debug(s"checking prior to test $upstream")
 
         if (upstream.exists()) {
-          s.log.info(s"deleting prior to test $upstream")
+          s.log.debug(s"deleting prior to test $upstream")
           upstream.delete()
         }
         orig
@@ -186,22 +186,20 @@ object BigProjectPlugin extends AutoPlugin {
    * `projectSettings`, so users have to manually add these to each of
    * their projects.
    */
-  def overrideProjectSettings(phase: Configuration): Seq[Setting[_]] = Seq(
-    // inConfig didn't work, so pass Configuration explicitly
-    packageBin in phase := dynamicPackageBinTask(phase).value,
-    //update in phase := eclipseTestVisibilityTask(phase).value,
-    //compile in phase := deleteBinOnCompileTask(phase).value,
-    packageBinFile in phase := packageBinFileTask(phase).value
-  ) ++ inConfig(phase)(
-      Seq(
-        // FIXME: move everything to be inConfig defined from the outside
-        transitiveUpdate := dynamicTransitiveUpdateTask(Some(phase)).value,
-        dependencyClasspath := dynamicDependencyClasspathTask.value,
-        projectDescriptors := dynamicProjectdescriptorsTask.value
-      )
-    ) ++ Seq(
-        // intentionally not in a configuration
-        transitiveUpdate := dynamicTransitiveUpdateTask(None).value
-      )
+  def overrideProjectSettings(configs: Configuration*): Seq[Setting[_]] = Seq(
+    // project level, no configuration
+    transitiveUpdate := dynamicTransitiveUpdateTask.value,
+    projectDescriptors := dynamicProjectdescriptorsTask.value
+  ) ++ configs.flatMap { config =>
+      inConfig(config)(
+        dependencyClasspath := dynamicDependencyClasspathTask.value
+      ) ++ Seq(
+          // inConfig didn't work, so pass Configuration explicitly
+          packageBin in config := dynamicPackageBinTask(config).value,
+          //update in config := eclipseTestVisibilityTask(config).value,
+          //compile in config := deleteBinOnCompileTask(config).value,
+          packageBinFile in config := packageBinFileTask(config).value
+        )
+    }
 
 }

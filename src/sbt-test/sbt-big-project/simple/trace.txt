@@ -1,305 +1,176 @@
 > d/compile
-REGISTERING <anon-16c9f7f0>
-REGISTERING <anon-16c9f7f0>
+REGISTERING <anon-2f9236d8>
+REGISTERING <anon-2f9236d8>
 REGISTERING d/compile:compile
 REGISTERING d/compile:compile
 STARTING d/compile:compile
 STARTING d/compile:compile
 REGISTERING d/compile:compile
 REGISTERING d/compile:incCompileSetup
-REGISTERING d/*:incOptions
-REGISTERING */*:incOptions
-STARTING */*:incOptions
 REGISTERING d/compile:compileAnalysisFilename
-REGISTERING */*:skip
-STARTING d/compile:compileAnalysisFilename
 REGISTERING */*:definesClass
-STARTING */*:skip
-REGISTERING d/compile:incCompileSetup
-REGISTERING streams-manager
+STARTING d/compile:compileAnalysisFilename
+REGISTERING */*:skip
 REGISTERING d/compile:dependencyClasspath
-STARTING */*:definesClass
 REGISTERING d/compile:dependencyClasspath
 REGISTERING */*:settingsData
 REGISTERING */*:buildStructure
 REGISTERING state
 REGISTERING d/compile:dependencyClasspath
-STARTING streams-manager
+STARTING */*:definesClass
+REGISTERING d/compile:incCompileSetup
+STARTING */*:skip
+REGISTERING streams-manager
 REGISTERING */*:compilerCache
-STARTING state
+REGISTERING d/*:incOptions
+REGISTERING */*:incOptions
 REGISTERING d/compile:manipulateBytecode
-STARTING d/compile:dependencyClasspath
 REGISTERING d/compile:compileIncremental
-REGISTERING d/compile:compile::compilerReporter
-STARTING d/compile:compile::compilerReporter
-REGISTERING d/compile:readAnalysis
 REGISTERING d/compile:compile::compileInputs
-REGISTERING d/compile:sources
-REGISTERING d/compile:managedSources
-REGISTERING d/compile:managedSources
-STARTING d/compile:managedSources
-REGISTERING d/compile:unmanagedSources
-REGISTERING d/compile:unmanagedSources
+REGISTERING d/compile:scalacOptions
+REGISTERING d/compile:update
+REGISTERING d/compile:update
+REGISTERING */*:scalacOptions
+REGISTERING d/compile:scalacOptions
+REGISTERING */*:javacOptions
+REGISTERING d/compile:compile::compileInputs
 REGISTERING */*:compilers
-STARTING d/compile:unmanagedSources
+REGISTERING */*:compilers
+REGISTERING d/*:scalaInstance
+REGISTERING d/*:scalaInstance
 REGISTERING d/*:bootIvyConfiguration
 REGISTERING d/*:updateSbtClassifiers::ivyConfiguration
 REGISTERING d/*:updateSbtClassifiers::ivyConfiguration
 REGISTERING d/*:updateSbtClassifiers::externalResolvers
 REGISTERING d/*:externalResolvers
-REGISTERING d/*:scalaInstance
-REGISTERING d/*:scalaInstance
-REGISTERING */*:compilers
 REGISTERING */*:sourcePositionMappers
-REGISTERING */*:javacOptions
-REGISTERING d/compile:compile::compileInputs
-STARTING d/*:externalResolvers
-REGISTERING d/compile:scalacOptions
-STARTING d/*:scalaInstance
-REGISTERING d/compile:update
-REGISTERING d/compile:update
-STARTING */*:sourcePositionMappers
-REGISTERING */*:scalacOptions
-STARTING */*:javacOptions
-REGISTERING d/compile:scalacOptions
-STARTING d/compile:update
+REGISTERING d/compile:sources
+REGISTERING d/compile:managedSources
+REGISTERING d/compile:managedSources
+REGISTERING d/compile:unmanagedSources
+REGISTERING d/compile:unmanagedSources
+REGISTERING d/compile:compile::compilerReporter
 REGISTERING d/compile:compileIncremental
+REGISTERING d/compile:readAnalysis
+STARTING state
+STARTING d/compile:dependencyClasspath
+STARTING streams-manager
+STARTING */*:incOptions
+STARTING d/compile:update
 STARTING */*:scalacOptions
-STARTING d/*:incOptions
-STARTING d/compile:incCompileSetup
-STARTING d/*:updateSbtClassifiers::ivyConfiguration
-STARTING */*:compilers
-STARTING d/compile:compile::compileInputs
-STARTING d/compile:compileIncremental
-STARTING */*:buildStructure
-STARTING */*:compilerCache
+STARTING */*:javacOptions
+STARTING d/*:scalaInstance
+STARTING d/*:externalResolvers
+STARTING */*:sourcePositionMappers
 STARTING d/compile:managedSources
 STARTING d/compile:unmanagedSources
+STARTING d/compile:compile::compilerReporter
+STARTING */*:buildStructure
+STARTING */*:compilerCache
+STARTING d/compile:incCompileSetup
+STARTING d/compile:compile::compileInputs
+STARTING */*:compilers
+STARTING d/*:updateSbtClassifiers::ivyConfiguration
+STARTING d/compile:compileIncremental
+STARTING d/*:incOptions
 STARTING d/compile:update
+STARTING d/compile:managedSources
 REGISTERING d/*:update
-REGISTERING d/*:update
-REGISTERING d/*:update
-REGISTERING d/*:dependencyCacheDirectory
-REGISTERING execution-roots
-REGISTERING d/*:updateCacheName
-REGISTERING d/*:update
+STARTING d/compile:unmanagedSources
 REGISTERING d/*:update
 REGISTERING d/*:ivyModule
 REGISTERING d/*:moduleSettings
 REGISTERING d/*:allDependencies
 REGISTERING d/*:projectDependencies
 REGISTERING d/*:projectDependencies
-REGISTERING d/*:ivySbt
-REGISTERING d/*:ivySbt
-REGISTERING d/*:ivyConfiguration
-REGISTERING d/*:ivyConfiguration
-REGISTERING d/*:fullResolvers
-REGISTERING d/*:bootResolvers
-REGISTERING d/*:projectResolver
-REGISTERING d/*:projectDescriptors
 STARTING */*:settingsData
 STARTING d/*:updateSbtClassifiers::externalResolvers
-STARTING d/compile:sources
-STARTING d/*:update
-STARTING d/*:dependencyCacheDirectory
-STARTING execution-roots
-STARTING d/*:updateCacheName
-REGISTERING d/*:projectDescriptors
-STARTING d/*:update
+REGISTERING d/*:ivySbt
 STARTING d/*:projectDependencies
-REGISTERING d/*:credentials
+REGISTERING d/*:ivySbt
+REGISTERING d/*:ivyConfiguration
+REGISTERING d/*:ivyConfiguration
 STARTING d/*:ivySbt
+REGISTERING d/*:fullResolvers
+REGISTERING d/*:bootResolvers
 STARTING d/*:ivyConfiguration
-REGISTERING d/*:credentials
+REGISTERING d/*:projectResolver
+REGISTERING d/*:projectDescriptors
+REGISTERING d/*:projectDescriptors
 STARTING d/*:bootResolvers
+REGISTERING d/*:credentials
+REGISTERING d/*:credentials
 REGISTERING */*:credentials
-STARTING d/*:projectDescriptors
-REGISTERING d/*:transitiveUpdate
-STARTING d/*:credentials
-REGISTERING d/*:transitiveUpdate
-REGISTERING d/*:transitiveUpdate
+REGISTERING d/*:updateCacheName
 REGISTERING d/*:update::unresolvedWarningConfiguration
+STARTING d/*:projectDescriptors
+REGISTERING d/*:dependencyPositions
+REGISTERING d/*:dependencyPositions
+REGISTERING d/*:dependencyCacheDirectory
+STARTING d/*:credentials
+REGISTERING d/*:transitiveUpdate
+REGISTERING d/*:transitiveUpdate
 STARTING */*:credentials
-REGISTERING d/*:dependencyPositions
-REGISTERING d/*:dependencyPositions
-STARTING d/*:transitiveUpdate
+REGISTERING d/*:transitiveUpdate
+REGISTERING execution-roots
+STARTING d/*:updateCacheName
+REGISTERING d/*:update
+REGISTERING d/*:update
 STARTING d/*:dependencyPositions
+REGISTERING d/*:update
+STARTING d/*:dependencyCacheDirectory
+STARTING d/*:transitiveUpdate
+STARTING execution-roots
+STARTING d/*:update
+STARTING d/*:update
+STARTING d/compile:sources
 STARTING d/compile:dependencyClasspath
-STARTING d/*:scalaInstance
-REGISTERING d/compile:dependencyClasspath
 STARTING d/compile:scalacOptions
 REGISTERING d/compile:dependencyClasspath
-REGISTERING d/*:scalaInstance
+REGISTERING d/compile:dependencyClasspath
+STARTING d/*:scalaInstance
+REGISTERING d/compile:scalacOptions
+REGISTERING d/compile:scalacOptions
 STARTING d/*:updateSbtClassifiers::ivyConfiguration
-REGISTERING d/compile:scalacOptions
-REGISTERING d/compile:scalacOptions
-STARTING d/*:update
+REGISTERING d/*:scalaInstance
 STARTING d/*:projectDependencies
-REGISTERING d/*:update
-REGISTERING d/*:projectDependencies
 STARTING d/*:projectDescriptors
 STARTING d/*:credentials
+REGISTERING d/*:projectDependencies
+STARTING d/*:dependencyPositions
+REGISTERING d/*:projectDescriptors
 REGISTERING d/*:projectDescriptors
 REGISTERING d/*:projectDescriptors
 STARTING d/*:transitiveUpdate
-STARTING d/*:dependencyPositions
 REGISTERING d/*:transitiveUpdate
-STARTING d/compile:dependencyClasspath
-STARTING d/*:scalaInstance
-STARTING d/compile:scalacOptions
-STARTING d/*:bootIvyConfiguration
 STARTING d/*:update
+STARTING d/compile:dependencyClasspath
+REGISTERING d/*:update
+STARTING d/compile:scalacOptions
+STARTING d/*:scalaInstance
+STARTING d/*:bootIvyConfiguration
 STARTING d/*:projectDependencies
 STARTING d/*:projectDescriptors
-STARTING d/*:transitiveUpdate
-[info] TRANSITIVEUPDATE CACHE HIT d/None
 STARTING d/*:update::unresolvedWarningConfiguration
+STARTING d/*:transitiveUpdate
+[info] TRANSITIVEUPDATE CACHE HIT d
+STARTING d/*:update
 STARTING d/compile:dependencyClasspath
 [info] DEPENDENCIESCLASSPATH CACHE HIT d/compile
 STARTING d/compile:scalacOptions
 STARTING */*:compilers
 STARTING d/*:allDependencies
 STARTING d/*:projectDescriptors
-REGISTERING d/*:projectDescriptors
-REGISTERING d/*:projectDescriptors
-REGISTERING c/*:ivyModule
-REGISTERING c/*:ivySbt
-REGISTERING c/*:ivySbt
-REGISTERING c/*:ivyConfiguration
-REGISTERING c/*:ivyConfiguration
-REGISTERING c/*:fullResolvers
-REGISTERING c/*:externalResolvers
-REGISTERING c/*:bootResolvers
-REGISTERING c/*:projectResolver
-REGISTERING c/*:projectDescriptors
-REGISTERING c/*:projectDescriptors
-REGISTERING c/*:credentials
-REGISTERING c/*:credentials
-REGISTERING c/*:moduleSettings
-REGISTERING c/*:allDependencies
-REGISTERING c/*:projectDependencies
-REGISTERING c/*:projectDependencies
-REGISTERING a/*:ivyModule
-REGISTERING a/*:moduleSettings
-REGISTERING a/*:allDependencies
-REGISTERING a/*:projectDependencies
-REGISTERING a/*:projectDependencies
-REGISTERING a/*:ivySbt
-REGISTERING a/*:ivyConfiguration
-REGISTERING a/*:fullResolvers
-REGISTERING a/*:bootResolvers
-REGISTERING a/*:externalResolvers
-REGISTERING a/*:projectResolver
-REGISTERING a/*:projectDescriptors
-REGISTERING a/*:projectDescriptors
-REGISTERING a/*:ivyConfiguration
-REGISTERING a/*:ivySbt
-REGISTERING a/*:credentials
-REGISTERING a/*:credentials
-REGISTERING b/*:ivyModule
-REGISTERING b/*:ivySbt
-REGISTERING b/*:credentials
-REGISTERING b/*:credentials
-REGISTERING b/*:ivyConfiguration
-REGISTERING b/*:ivyConfiguration
-REGISTERING b/*:fullResolvers
-REGISTERING b/*:projectResolver
-REGISTERING b/*:projectDescriptors
-REGISTERING b/*:projectDescriptors
-REGISTERING b/*:externalResolvers
-REGISTERING b/*:bootResolvers
-REGISTERING b/*:ivySbt
-REGISTERING b/*:moduleSettings
-REGISTERING b/*:allDependencies
-REGISTERING b/*:projectDependencies
-REGISTERING b/*:projectDependencies
 STARTING d/*:transitiveUpdate
+REGISTERING d/*:projectDescriptors
 STARTING d/compile:dependencyClasspath
+REGISTERING d/*:projectDescriptors
 STARTING d/*:moduleSettings
-STARTING c/*:ivySbt
-STARTING c/*:ivyConfiguration
-STARTING c/*:externalResolvers
-STARTING c/*:bootResolvers
-STARTING c/*:projectDescriptors
-STARTING c/*:credentials
-STARTING c/*:projectDependencies
-STARTING a/*:projectDependencies
-STARTING a/*:bootResolvers
-STARTING a/*:externalResolvers
-STARTING a/*:projectDescriptors
-STARTING a/*:ivyConfiguration
-STARTING a/*:ivySbt
-STARTING a/*:credentials
-STARTING b/*:credentials
-STARTING b/*:ivyConfiguration
-STARTING b/*:projectDescriptors
-STARTING b/*:externalResolvers
-STARTING b/*:bootResolvers
-STARTING b/*:ivySbt
-STARTING b/*:projectDependencies
-STARTING d/compile:incCompileSetup
-STARTING c/*:projectDescriptors
-STARTING c/*:credentials
-REGISTERING c/*:projectDescriptors
-REGISTERING c/*:projectDescriptors
-STARTING c/*:projectDependencies
-STARTING a/*:projectDependencies
-REGISTERING c/*:projectDependencies
-REGISTERING a/*:projectDependencies
-STARTING a/*:projectDescriptors
-STARTING a/*:credentials
-REGISTERING a/*:projectDescriptors
-REGISTERING a/*:projectDescriptors
-STARTING b/*:credentials
-STARTING b/*:projectDescriptors
-STARTING b/*:projectDependencies
-REGISTERING b/*:projectDescriptors
-REGISTERING b/*:projectDescriptors
-STARTING d/compile:readAnalysis
-REGISTERING b/*:projectDependencies
-STARTING c/*:projectDescriptors
-STARTING c/*:projectDependencies
-STARTING a/*:projectDependencies
-STARTING a/*:projectDescriptors
-STARTING b/*:projectDescriptors
-STARTING b/*:projectDependencies
-STARTING c/*:projectDescriptors
-STARTING c/*:allDependencies
-STARTING a/*:allDependencies
-STARTING a/*:projectDescriptors
-STARTING b/*:projectDescriptors
-STARTING b/*:allDependencies
-REGISTERING c/*:projectDescriptors
-REGISTERING c/*:projectDescriptors
-REGISTERING a/*:projectDescriptors
-REGISTERING a/*:projectDescriptors
-STARTING c/*:moduleSettings
-REGISTERING b/*:projectDescriptors
-REGISTERING b/*:projectDescriptors
-STARTING a/*:moduleSettings
-STARTING a/*:projectDescriptors
-STARTING b/*:moduleSettings
-STARTING a/*:projectDescriptors
-STARTING a/*:projectResolver
-STARTING a/*:fullResolvers
-STARTING a/*:ivyConfiguration
-STARTING a/*:ivySbt
-STARTING a/*:ivyModule
-STARTING b/*:projectDescriptors
-STARTING b/*:projectDescriptors
-STARTING b/*:projectResolver
-STARTING b/*:fullResolvers
-STARTING b/*:ivyConfiguration
-STARTING b/*:ivySbt
-STARTING b/*:ivyModule
-STARTING c/*:projectDescriptors
-STARTING c/*:projectDescriptors
-STARTING c/*:projectResolver
-STARTING c/*:fullResolvers
-STARTING c/*:ivyConfiguration
-STARTING c/*:ivySbt
-STARTING c/*:ivyModule
 STARTING d/*:projectDescriptors
+STARTING d/compile:incCompileSetup
+STARTING d/*:projectDescriptors
+[info] PROJECTDESCRIPTORS CACHE HIT d
+STARTING d/compile:readAnalysis
 STARTING d/*:projectDescriptors
 STARTING d/*:projectResolver
 STARTING d/*:fullResolvers
@@ -313,188 +184,116 @@ STARTING d/compile:compile::compileInputs
 STARTING d/compile:compileIncremental
 STARTING d/compile:manipulateBytecode
 STARTING d/compile:compile
-STARTING <anon-16c9f7f0>
 REGISTERING d/compile:discoveredMainClasses
+STARTING <anon-2f9236d8>
 STARTING d/compile:discoveredMainClasses
-STARTING <anon-16c9f7f0>
-Total time: 123.68016 ms
+STARTING <anon-2f9236d8>
+Total time: 81.094914 ms
 Task times:
-  d/*:update: 5.4169089999999995 ms
-  b/*:projectDescriptors: 5.086836 ms
-  c/*:projectDescriptors: 3.7604859999999998 ms
-  d/*:projectDescriptors: 3.722658 ms
-  d/compile:compileIncremental: 2.104046 ms
-  d/compile:unmanagedSources: 0.85048 ms
-  d/*:dependencyPositions: 0.7784099999999999 ms
-  d/*:transitiveUpdate: 0.701259 ms
-  d/*:updateSbtClassifiers::ivyConfiguration: 0.666512 ms
-  d/compile:dependencyClasspath: 0.630724 ms
-  d/compile:scalacOptions: 0.48950099999999996 ms
-  a/*:ivyConfiguration: 0.414831 ms
-  a/*:projectDescriptors: 0.394548 ms
-  c/*:ivyConfiguration: 0.384936 ms
-  d/*:ivyConfiguration: 0.379143 ms
-  b/*:ivyConfiguration: 0.370886 ms
-  d/compile:discoveredMainClasses: 0.370556 ms
-  d/compile:compile::compileInputs: 0.357672 ms
-  */*:compilers: 0.314146 ms
-  a/*:ivySbt: 0.22930699999999998 ms
-  d/*:scalaInstance: 0.224302 ms
-  d/compile:incCompileSetup: 0.214273 ms
-  b/*:ivySbt: 0.21201299999999998 ms
-  c/*:ivySbt: 0.206306 ms
-  d/*:ivySbt: 0.201563 ms
-  d/compile:compile: 0.18520299999999998 ms
-  d/*:projectDependencies: 0.16894499999999998 ms
-  d/*:dependencyCacheDirectory: 0.13887 ms
-  d/*:bootResolvers: 0.12021499999999999 ms
-  b/*:projectDependencies: 0.115059 ms
-  c/*:bootResolvers: 0.108606 ms
-  c/*:projectDependencies: 0.104763 ms
-  d/compile:update: 0.099782 ms
-  a/*:projectDependencies: 0.085799 ms
-  a/*:bootResolvers: 0.082247 ms
-  b/*:bootResolvers: 0.070395 ms
-  d/*:ivyModule: 0.065597 ms
-  b/*:ivyModule: 0.058164999999999994 ms
-  a/*:ivyModule: 0.057561999999999995 ms
-  c/*:ivyModule: 0.056993999999999996 ms
-  c/*:credentials: 0.042566 ms
-  c/*:fullResolvers: 0.041193 ms
-  a/*:moduleSettings: 0.040098999999999996 ms
-  d/*:allDependencies: 0.039445999999999995 ms
-  d/*:credentials: 0.038976 ms
-  d/*:externalResolvers: 0.036621 ms
-  c/*:externalResolvers: 0.032507999999999995 ms
-  c/*:allDependencies: 0.032251999999999996 ms
-  a/*:fullResolvers: 0.031657 ms
-  b/*:moduleSettings: 0.029009 ms
-  d/*:fullResolvers: 0.028034 ms
-  a/*:allDependencies: 0.027337999999999998 ms
-  b/*:fullResolvers: 0.027097 ms
-  b/*:allDependencies: 0.025693999999999998 ms
-  d/compile:compileAnalysisFilename: 0.025693 ms
-  a/*:externalResolvers: 0.02512 ms
-  d/*:incOptions: 0.023965 ms
-  d/*:updateCacheName: 0.023873 ms
-  b/*:externalResolvers: 0.021544 ms
-  c/*:moduleSettings: 0.021113999999999997 ms
-  d/*:moduleSettings: 0.020925 ms
-  d/compile:managedSources: 0.020801999999999998 ms
-  d/compile:sources: 0.020655 ms
-  d/*:updateSbtClassifiers::externalResolvers: 0.02004 ms
-  d/compile:readAnalysis: 0.019326 ms
-  b/*:credentials: 0.018267 ms
-  a/*:credentials: 0.018108 ms
-  <anon-16c9f7f0>: 0.01668 ms
-  a/*:projectResolver: 0.016496 ms
-  d/*:projectResolver: 0.015422 ms
-  */*:buildStructure: 0.014308 ms
-  c/*:projectResolver: 0.011739999999999999 ms
-  b/*:projectResolver: 0.011224999999999999 ms
-  d/*:update::unresolvedWarningConfiguration: 0.010444 ms
-  */*:compilerCache: 0.010379 ms
-  d/compile:manipulateBytecode: 0.010275999999999999 ms
-  execution-roots: 0.009548 ms
-  */*:settingsData: 0.009205 ms
-  d/*:bootIvyConfiguration: 0.009032 ms
-  streams-manager: 0.008746 ms
-  */*:sourcePositionMappers: 0.008664 ms
-  */*:skip: 0.008466999999999999 ms
-  */*:definesClass: 0.008005 ms
-  */*:incOptions: 0.007692 ms
-  */*:credentials: 0.006082 ms
-  d/compile:compile::compilerReporter: 0.005673999999999999 ms
-  state: 0.0056229999999999995 ms
-  */*:javacOptions: 0.005552 ms
-  */*:scalacOptions: 0.005031 ms
+  d/compile:compile::compileInputs: 5.142206 ms
+  d/*:update: 3.8842429999999997 ms
+  d/compile:compileIncremental: 2.289417 ms
+  d/*:dependencyPositions: 0.739521 ms
+  d/compile:unmanagedSources: 0.723588 ms
+  d/*:transitiveUpdate: 0.69172 ms
+  d/*:projectDescriptors: 0.501949 ms
+  d/*:updateSbtClassifiers::ivyConfiguration: 0.49578 ms
+  d/compile:dependencyClasspath: 0.48519999999999996 ms
+  d/compile:scalacOptions: 0.45839199999999997 ms
+  d/compile:discoveredMainClasses: 0.366593 ms
+  d/*:ivyConfiguration: 0.313353 ms
+  */*:compilers: 0.262411 ms
+  d/*:ivySbt: 0.23005899999999999 ms
+  d/*:projectDependencies: 0.17183299999999999 ms
+  d/compile:compile: 0.17141099999999998 ms
+  d/*:scalaInstance: 0.14546399999999998 ms
+  d/*:dependencyCacheDirectory: 0.13871 ms
+  d/*:bootResolvers: 0.111916 ms
+  d/compile:incCompileSetup: 0.11112799999999999 ms
+  d/compile:update: 0.100646 ms
+  d/*:ivyModule: 0.059753999999999995 ms
+  d/*:credentials: 0.034533999999999995 ms
+  d/*:updateSbtClassifiers::externalResolvers: 0.029948 ms
+  d/*:allDependencies: 0.029529 ms
+  d/*:externalResolvers: 0.028124 ms
+  d/*:incOptions: 0.02692 ms
+  d/*:fullResolvers: 0.024694999999999998 ms
+  d/compile:compileAnalysisFilename: 0.024236 ms
+  d/compile:sources: 0.023778999999999998 ms
+  d/*:updateCacheName: 0.021438 ms
+  d/compile:readAnalysis: 0.020196 ms
+  d/compile:managedSources: 0.019024 ms
+  <anon-2f9236d8>: 0.018775 ms
+  d/*:moduleSettings: 0.016967 ms
+  */*:buildStructure: 0.011833999999999999 ms
+  */*:compilerCache: 0.008832999999999999 ms
+  d/*:projectResolver: 0.008799 ms
+  */*:javacOptions: 0.008076 ms
+  execution-roots: 0.006986 ms
+  d/*:update::unresolvedWarningConfiguration: 0.0068249999999999995 ms
+  d/*:bootIvyConfiguration: 0.006702 ms
+  d/compile:manipulateBytecode: 0.006463 ms
+  */*:definesClass: 0.005821 ms
+  */*:incOptions: 0.005716 ms
+  */*:skip: 0.005379 ms
+  */*:settingsData: 0.005326 ms
+  state: 0.004849 ms
+  */*:scalacOptions: 0.0047989999999999994 ms
+  d/compile:compile::compilerReporter: 0.004474 ms
+  */*:credentials: 0.004458999999999999 ms
+  */*:sourcePositionMappers: 0.004114 ms
+  streams-manager: 0.004051 ms
 Graph times:
-  <anon-16c9f7f0>: 246.089911 ms
-  d/*:update: 209.765032 ms
-  d/*:projectDescriptors: 150.480313 ms
-  d/compile:scalacOptions: 140.919176 ms
-  d/compile:compileIncremental: 127.030153 ms
-  d/compile:compile::compileInputs: 124.112023 ms
-  d/compile:compile: 123.02049099999999 ms
-  d/compile:manipulateBytecode: 119.93750299999999 ms
-  c/*:projectDescriptors: 92.24893399999999 ms
-  d/*:ivySbt: 85.58357199999999 ms
-  d/*:ivyConfiguration: 85.19881699999999 ms
-  d/*:ivyModule: 84.98593 ms
-  d/*:fullResolvers: 82.896639 ms
-  d/*:projectResolver: 82.679013 ms
-  b/*:projectDescriptors: 80.537684 ms
-  c/*:ivySbt: 70.24248399999999 ms
-  c/*:ivyConfiguration: 69.866383 ms
-  c/*:ivyModule: 65.54046699999999 ms
-  c/*:fullResolvers: 64.46788699999999 ms
-  d/compile:dependencyClasspath: 58.573952 ms
-  a/*:projectDescriptors: 55.404914999999995 ms
-  c/*:projectResolver: 54.800517 ms
-  b/*:ivySbt: 52.405553 ms
-  b/*:ivyConfiguration: 51.73317 ms
-  b/*:ivyModule: 48.432311 ms
-  a/*:ivySbt: 47.159724 ms
-  b/*:fullResolvers: 47.040738999999995 ms
-  b/*:projectResolver: 46.891642999999995 ms
-  a/*:ivyConfiguration: 46.803399999999996 ms
-  a/*:ivyModule: 42.845102999999995 ms
-  a/*:fullResolvers: 41.670579 ms
-  a/*:projectResolver: 41.441688 ms
-  d/compile:incCompileSetup: 36.815380999999995 ms
-  d/compile:readAnalysis: 33.638204 ms
-  */*:compilers: 29.398532999999997 ms
-  b/*:moduleSettings: 26.173752999999998 ms
-  d/*:bootIvyConfiguration: 21.754164 ms
-  a/*:moduleSettings: 21.716613 ms
-  d/*:transitiveUpdate: 20.804268 ms
-  d/*:scalaInstance: 19.707307 ms
-  d/*:updateSbtClassifiers::ivyConfiguration: 19.141977999999998 ms
-  d/*:moduleSettings: 17.599038999999998 ms
-  */*:settingsData: 14.737954 ms
-  d/compile:sources: 14.135157999999999 ms
-  c/*:moduleSettings: 13.643716999999999 ms
-  d/*:updateSbtClassifiers::externalResolvers: 13.500133 ms
-  c/*:projectDependencies: 12.334076 ms
-  b/*:projectDependencies: 12.251261 ms
-  a/*:projectDependencies: 12.080784 ms
-  c/*:credentials: 11.650501 ms
-  d/*:allDependencies: 11.296370999999999 ms
-  d/compile:unmanagedSources: 11.282572 ms
-  a/*:credentials: 10.862851 ms
-  c/*:allDependencies: 10.859441 ms
-  */*:buildStructure: 10.741875 ms
-  a/*:allDependencies: 10.714775 ms
-  */*:compilerCache: 10.673943999999999 ms
-  d/*:projectDependencies: 10.581878999999999 ms
-  b/*:credentials: 10.418823999999999 ms
-  d/compile:managedSources: 10.381158 ms
-  d/compile:update: 10.015384 ms
-  b/*:allDependencies: 9.781592 ms
-  d/*:update::unresolvedWarningConfiguration: 7.1392299999999995 ms
-  c/*:bootResolvers: 4.893465 ms
-  c/*:externalResolvers: 4.793680999999999 ms
-  a/*:externalResolvers: 4.6234079999999995 ms
-  a/*:bootResolvers: 4.597449 ms
-  b/*:bootResolvers: 4.117876 ms
-  b/*:externalResolvers: 4.026434 ms
-  d/*:credentials: 3.8601069999999997 ms
-  d/*:dependencyPositions: 3.5979889999999997 ms
-  d/*:incOptions: 3.2066239999999997 ms
-  d/*:updateCacheName: 2.8365679999999998 ms
-  d/*:dependencyCacheDirectory: 2.8316589999999997 ms
-  execution-roots: 2.82456 ms
-  d/*:bootResolvers: 1.944299 ms
-  */*:credentials: 0.5204759999999999 ms
-  d/*:externalResolvers: 0.48325399999999996 ms
-  */*:definesClass: 0.44351599999999997 ms
-  */*:javacOptions: 0.43832 ms
-  */*:sourcePositionMappers: 0.42813399999999996 ms
-  streams-manager: 0.408883 ms
-  d/compile:discoveredMainClasses: 0.398571 ms
-  */*:skip: 0.315148 ms
-  */*:scalacOptions: 0.280061 ms
-  state: 0.257369 ms
-  d/compile:compileAnalysisFilename: 0.132721 ms
-  d/compile:compile::compilerReporter: 0.076012 ms
-  */*:incOptions: 0.061426999999999995 ms
+  <anon-2f9236d8>: 160.375281 ms
+  d/compile:compile: 121.91874899999999 ms
+  d/compile:scalacOptions: 57.590049 ms
+  d/compile:dependencyClasspath: 50.657295999999995 ms
+  d/*:update: 48.817800999999996 ms
+  d/compile:compileIncremental: 40.847812999999995 ms
+  d/compile:compile::compileInputs: 38.715422 ms
+  d/compile:manipulateBytecode: 34.295719999999996 ms
+  */*:compilers: 27.964671 ms
+  d/compile:incCompileSetup: 25.965217 ms
+  d/compile:readAnalysis: 21.307474 ms
+  d/*:updateSbtClassifiers::ivyConfiguration: 20.549951 ms
+  d/*:scalaInstance: 19.868312 ms
+  d/*:projectDescriptors: 19.485215 ms
+  d/*:bootIvyConfiguration: 19.130851 ms
+  d/*:transitiveUpdate: 18.449216 ms
+  d/*:ivyModule: 15.898321 ms
+  d/*:ivySbt: 13.106788 ms
+  d/*:ivyConfiguration: 12.495021 ms
+  d/compile:sources: 12.009238999999999 ms
+  d/*:fullResolvers: 11.952191 ms
+  d/*:projectResolver: 11.760634 ms
+  d/compile:unmanagedSources: 11.698065999999999 ms
+  */*:settingsData: 11.561387999999999 ms
+  d/compile:update: 11.466267 ms
+  d/compile:managedSources: 11.101606 ms
+  d/*:moduleSettings: 10.631924999999999 ms
+  d/*:updateSbtClassifiers::externalResolvers: 10.584511 ms
+  d/*:allDependencies: 10.214758 ms
+  d/*:incOptions: 9.047227 ms
+  d/*:projectDependencies: 8.652735 ms
+  d/*:update::unresolvedWarningConfiguration: 8.19509 ms
+  d/*:dependencyPositions: 3.7494769999999997 ms
+  d/*:credentials: 3.0077179999999997 ms
+  */*:buildStructure: 2.88346 ms
+  */*:compilerCache: 2.6228879999999997 ms
+  state: 1.4878149999999999 ms
+  d/compile:compile::compilerReporter: 1.4866789999999999 ms
+  streams-manager: 1.385505 ms
+  */*:incOptions: 1.344531 ms
+  */*:scalacOptions: 1.246103 ms
+  */*:javacOptions: 1.220175 ms
+  */*:sourcePositionMappers: 1.052621 ms
+  d/*:externalResolvers: 1.04902 ms
+  d/compile:discoveredMainClasses: 0.9808439999999999 ms
+  d/compile:compileAnalysisFilename: 0.634983 ms
+  execution-roots: 0.5255409999999999 ms
+  d/*:dependencyCacheDirectory: 0.479591 ms
+  */*:definesClass: 0.470871 ms
+  d/*:updateCacheName: 0.364454 ms
+  */*:skip: 0.314415 ms
+  */*:credentials: 0.278596 ms
+  d/*:bootResolvers: 0.24692899999999998 ms

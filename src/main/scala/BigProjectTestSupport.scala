@@ -14,16 +14,17 @@ object BigProjectTestSupport {
   ///////////////////////////////////////////////////////////////////////////
   // Test instrumentation to detect invocations of expensive Tasks
   // WORKAROUND https://github.com/sbt/sbt/issues/1209
-  val testConfigInstrumentation = Seq(
-    // TODO: breadcrumbs should pass Some(Configuration)
-    update <<= update dependsOn breadcrumb("update"),
-    compile <<= compile dependsOn breadcrumb("compile"),
-    packageBin <<= packageBin dependsOn breadcrumb("packageBin")
-  )
-  val testInstrumentation = Seq(
+  def testInstrumentation(configs: Configuration*) = Seq(
+    scriptedTasks,
     projectDependencies <<= projectDependencies dependsOn breadcrumb("projectDependencies"),
     projectDescriptors <<= projectDescriptors dependsOn breadcrumb("projectDescriptors")
-  )
+  ) ++ configs.flatMap { config =>
+      Seq(
+        update <<= update dependsOn breadcrumb("update"),
+        compile <<= compile dependsOn breadcrumb("compile"),
+        packageBin <<= packageBin dependsOn breadcrumb("packageBin")
+      )
+    }
 
   def breadcrumb(name: String, config: Option[Configuration] = None) = baseDirectory.map { dir => IO.touch(dir / (config.map(_ + "-").getOrElse("") + name + ".breadcrumb")) }
 

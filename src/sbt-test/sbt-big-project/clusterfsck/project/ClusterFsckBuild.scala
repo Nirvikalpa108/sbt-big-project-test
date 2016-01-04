@@ -8,6 +8,8 @@ import Def.Initialize
 import fommil.BigProjectPlugin
 import fommil.BigProjectKeys
 
+import fommil.BigProjectTestSupport
+
 /**
  * Example large project structure. Specific challenges:
  *
@@ -45,7 +47,6 @@ import fommil.BigProjectKeys
  * NOTE: DEV cycle use obf-1770460346 with tests obf--694432521
  */
 object ClusterFsckBuild extends Build {
-  import fommil.BigProjectTestSupport._
 
   override lazy val settings = super.settings ++ Seq(
     scalaVersion := "2.10.6",
@@ -62,17 +63,11 @@ object ClusterFsckBuild extends Build {
         case (p, d) => p.dependsOn(LocalProject(d))
       }.enablePlugins(BigProjectPlugin).settings(
         // install BigProjectPlugin
-        BigProjectPlugin.overrideProjectSettings(Compile),
-        BigProjectPlugin.overrideProjectSettings(Test)
+        BigProjectPlugin.overrideProjectSettings(Compile, Test),
+        BigProjectTestSupport.testInstrumentation(Compile, Test)
       ).settings(
-          // install the test instrumentation
-          inConfig(Compile)(testInstrumentation),
-          inConfig(Test)(testInstrumentation)
-        ).settings(
-            // install the custom `scripted' tasks
-            scriptedTasks,
-            updateOptions := updateOptions.value.withCachedResolution(true)
-          )
+        updateOptions := updateOptions.value.withCachedResolution(true)
+      )
   }.map { proj =>
     // generate the project
     createSources(proj.id)
