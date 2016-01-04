@@ -21,7 +21,10 @@ object SimpleBuild extends Build {
 
   override lazy val settings = super.settings ++ Seq(
     scalaVersion := "2.10.6",
-    version := "v1"
+    version := "v1",
+
+    // forces single threaded Tasks for easy debugging
+    concurrentRestrictions in Global := Seq(Tags.limitAll(1))
   )
 
   def simpleProject(name: String): Project = {
