@@ -1,18 +1,18 @@
 # check the compile
 > d/compile
-> a/breadcrumbsExpect update compile packageBin projectDescriptors projectDependencies
-> b/breadcrumbsExpect update compile packageBin projectDescriptors projectDependencies
-> c/breadcrumbsExpect update compile packageBin projectDescriptors projectDependencies
-> d/breadcrumbsExpect update compile projectDescriptors projectDependencies
+> a/breadcrumbsExpect compile-update compile-compile compile-packageBin projectDependencies
+> b/breadcrumbsExpect compile-update compile-compile compile-packageBin projectDependencies
+> c/breadcrumbsExpect compile-update compile-compile compile-packageBin projectDependencies
+> d/breadcrumbsExpect compile-update compile-compile projectDependencies
 > breadcrumbsClear
 # check that subsequent invocations don't do anything
 > d/compile
 > a/breadcrumbsExpect
 > b/breadcrumbsExpect
 > c/breadcrumbsExpect
-> d/breadcrumbsExpect update compile
+> d/breadcrumbsExpect compile-update compile-compile
 > d/compile
 > a/breadcrumbsExpect
 > b/breadcrumbsExpect
 > c/breadcrumbsExpect
-> d/breadcrumbsExpect update compile
+> d/breadcrumbsExpect compile-update compile-compile

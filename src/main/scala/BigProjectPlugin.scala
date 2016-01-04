@@ -188,6 +188,7 @@ object BigProjectPlugin extends AutoPlugin {
    */
   def overrideProjectSettings(configs: Configuration*): Seq[Setting[_]] = Seq(
     // project level, no configuration
+    exportJars := true,
     transitiveUpdate := dynamicTransitiveUpdateTask.value,
     projectDescriptors := dynamicProjectdescriptorsTask.value
   ) ++ configs.flatMap { config =>

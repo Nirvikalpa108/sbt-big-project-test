@@ -15,7 +15,6 @@ object BigProjectTestSupport {
   // Test instrumentation to detect invocations of expensive Tasks
   // WORKAROUND https://github.com/sbt/sbt/issues/1209
   def testInstrumentation(configs: Configuration*): Seq[Setting[_]] = scriptedTasks ++ Seq(
-    projectDependencies <<= projectDependencies dependsOn breadcrumb("projectDependencies"),
     projectDescriptors <<= projectDescriptors dependsOn breadcrumb("projectDescriptors")
   ) ++ configs.flatMap { config =>
       inConfig(config) {
