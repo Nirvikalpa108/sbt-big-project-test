@@ -60,7 +60,7 @@ object BigProjectPlugin extends AutoPlugin {
         BigProjectTestSupport.testInstrumentation(Compile, Test)
       ) */
       .settings(
-        updateOptions := updateOptions.value.withCachedResolution(true)
+        Compile / scalacOptions += "-deprecation"
       )
   }.map { proj =>
     // generate the project
@@ -277,11 +277,17 @@ object BigProjectPlugin extends AutoPlugin {
     val foo = dir / sanitised / "Foo.scala"
     val bar = dir / sanitised / "Bar.scala"
 
+    val repeatedFoo = (1 to 10000).toList.map(n => s"lazy val foo$n = 'foo$n")
+
+    val code = s"package $sanitised\nobject Foo extends App {\n " +
+      repeatedFoo.mkString("\n") +
+      s"\n}"
+
     // having two main classes is a good way to eyeball when expensive
     // classpath scanning is taking place because it'll always
     // complain about multiple mains.
-    IO.write(foo, s"package $sanitised\nobject Foo extends App")
-    IO.write(bar, s"package $sanitised\nobject Bar extends App")
+    IO.write(foo, code)
+    IO.write(bar, s"package $sanitised\nobject Bar extends App { lazy val bar = 'bar }")
 
     val testdir = file(name) / "src/test/scala/"
     testdir.mkdirs()
