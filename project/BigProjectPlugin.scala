@@ -46,17 +46,9 @@ import Def.Initialize
  *
  * NOTE: DEV cycle use obf-1770460346 with tests obf--694432521
  */
-object ClusterFsckBuild extends Build {
+object BigProjectPlugin extends AutoPlugin {
 
-  override lazy val settings = super.settings ++ Seq(
-    scalaVersion := "2.10.6",
-    version := "v1",
-    // doesn't catch everything https://github.com/sbt/sbt/issues/840
-    ivyLoggingLevel := UpdateLogging.Quiet,
-    updateOptions := updateOptions.value.withCachedResolution(true)
-  )
-
-  override lazy val projects: Seq[Project] = structure.toSeq.map {
+  override lazy val extraProjects: Seq[Project] = structure.toSeq.map {
     case (name, depNames) =>
       // sidenote, it'd be nice if dependsOn could take a Seq
       depNames.foldLeft(Project(name, file(name))) {
